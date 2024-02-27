@@ -4,9 +4,9 @@ namespace App\Models;
 
 use \CodeIgniter\Model;
 
-class Ordini extends Model
+class Immagini extends Model
 {
-    protected $table = 'ordini';
+    protected $table = 'immagini';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
@@ -14,15 +14,15 @@ class Ordini extends Model
     protected $returnType = 'object';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['id', 'id_utente', 'costo_totale', 'data_ordine'];
+    protected $allowedFields = ['id', 'id_prodotto', 'percorso'];
 
     protected bool $allowEmptyInserts = false;
 
     // Dates
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'data_ordine';
-    protected $updatedField  = 'data_ordine';
+    protected $createdField  = '';
+    protected $updatedField  = '';
     protected $deletedField  = '';
 
     // Validation
@@ -42,23 +42,19 @@ class Ordini extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function createOrdine($id_utente, $costo_totale)
+    public function getImmagine($id)
     {
-        $dati = [
-            'id_utente' => $id_utente,
-            'costo_totale' => $costo_totale,
-        ];
-
-        $this->insert($dati);
+        return $this->find($id);
     }
 
-    public function getOrdini($id)
+    public function getImmagineOf($id_prodotto)
     {
-        return $this->where('id_utente', $id)->orderBy('data_ordine', 'desc')->findAll();
+        return $this->where('id_prodotto', $id_prodotto)->findAll();
     }
 
-    public function getLastOrdine($id_utente)
+    public function addImmagine($id_prodotto, $percorso)
     {
-        return $this->where('id_utente', $id_utente)->orderBy('data_ordine', 'desc')->limit(1)->find()[0];
+        $dati = ['id_prodotto' => $id_prodotto, 'percorso' => $percorso];
+        return $this->insert($dati);
     }
 }
