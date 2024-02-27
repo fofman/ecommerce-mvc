@@ -4,8 +4,9 @@ namespace App\Controllers;
 
 class Ordini extends BaseController
 {
-    public function page(): string
+    public function page()
     {
+        if(session()->get('id_utente')==NULL) return redirect()->to('login');
         $modelOrdini = model('Ordini');
         $modelDettagli = model('Dettagli_ordini');
         $modelProdotti = model('Prodotti');
@@ -15,7 +16,6 @@ class Ordini extends BaseController
             foreach ($ordine->dettagli as $item) {
                 $prodotto = $modelProdotti->getProdotto($item->id_prodotto);
                 $item->titolo = $prodotto->titolo;
-                $item->prezzo = $prodotto->prezzo;
             }
         }
         return view('Ordini', ['ordini' => $ordini]);

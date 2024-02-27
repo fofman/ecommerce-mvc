@@ -63,7 +63,8 @@ class Prodotti extends Model
 
     public function getProdottiRecenti($limite)
     {
-        return $this->orderBy('data_aggiunta', 'desc')->where('tipologia', 'prodotto')->findAll($limite);
+        //return $this->orderBy('data_aggiunta', 'desc')->where('tipologia', 'prodotto')->findAll($limite);
+        return $this->orderBy('data_aggiunta', 'desc')->findAll($limite);
     }
 
     public function getAccessori($id)

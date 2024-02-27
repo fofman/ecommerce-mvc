@@ -52,17 +52,32 @@ class Utenti extends Model
         return $this->where('nome_utente', $nome)->find();
     }
 
-    public function login($nome_utente, $pw)
+    public function addUtente($nome_utente, $password)
+    {
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        $dati = [
+            'nome_utente' => $nome_utente,
+            'pw_hash' => $passwordHash
+        ];
+
+        try {
+            $this->insert($dati);
+            return 0;
+        } catch (\Throwable $th) {
+            return 1; //utente esistente
+        }
+    }
+
+    public function login($nome_utente, $password)
     {
         $nome_utente = trim($nome_utente);
 
-        $pwHash = $this->getUtenteByNome($nome_utente)[0]->pw_hash;
-
-        if ($pwHash == false) { //utente non trovato
+        try {
+            $pwHash = $this->getUtenteByNome($nome_utente)[0]->pw_hash;
+        } catch (\Throwable $th) { //utente non trovato
             return 1;
         }
-
-        if (password_verify($pw, $pwHash) != true) { //password errata
+        if (password_verify($password, $pwHash) != true) { //password errata
             return 2;
         } else { //utente esistente e password corretta
             return 0;

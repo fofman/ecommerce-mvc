@@ -25,6 +25,21 @@
             </div>
             <button class="btn btn-primary w-100 py-2" type="submit">Login</button>
         </form>
+        <br>
+        <div class="text-center">
+            Non hai un account? <a href="/register">Registrati qui</a>
+        </div>
+        <?php
+        if ($error) {
+            $error = ($error == 1) ? "Utente inesistente" : "La password è errata";
+            echo <<<HTML
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            <strong>$error</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            HTML;
+        }
+        ?>
     </main>
 </body>
 

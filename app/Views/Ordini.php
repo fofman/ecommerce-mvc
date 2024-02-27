@@ -12,13 +12,16 @@
 
 <body>
     <?php echo view('Components/Header.php', ['active' => 0]) ?>
-    <div class="accordion" id="ordini">
-        <?php
-        foreach ($ordini as $ordine) {
-            echo view('Components/CardDettaglioOrdine.php', ['ordine' => $ordine]);
-        }
-        ?>
-    </div>
+    <main class="mx-auto">
+        <div class="accordion mx-5" id="ordini">
+            <?php
+            foreach ($ordini as $ordine) {
+                echo view('Components/CardDettaglioOrdine.php', ['ordine' => $ordine]);
+            }
+            ?>
+        </div>
+    </main>
+    <br>
     <?php echo view('Components/Footer.php') ?>
 </body>
 

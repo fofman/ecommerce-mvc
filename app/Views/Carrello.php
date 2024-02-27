@@ -21,7 +21,7 @@
             <div class="card-body">
                 <h4>Totale: <?= $totale ?> €</h4>
                 <br>
-                <a href="/checkout" class="btn btn-primary">Conferma ordine</a>
+                <a href="/checkout" class="btn btn-primary<?php echo (sizeof($prodotti)==0)?' disabled':''?>">Conferma ordine</a>
             </div>
         </div>
         <br>

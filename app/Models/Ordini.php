@@ -54,12 +54,12 @@ class Ordini extends Model
 
     public function getOrdini($id)
     {
-        return $this->where('id', $id)->findAll();
+        return $this->where('id_utente', $id)->orderBy('data_ordine', 'desc')->findAll();
     }
 
     public function getLastOrdine($id_utente)
     {
-        return $this->selectMax('data_ordine', 'id')->where('id_utente', $id_utente)->find()[0];
+        return $this->where('id_utente', $id_utente)->orderBy('data_ordine', 'desc')->limit(1)->find()[0];
     }
 }
 

@@ -4,26 +4,23 @@ namespace App\Controllers;
 
 class Carrello extends BaseController
 {
-    public function page(): string
+    public function page()
     {
         $modelCarrelli = model('Carrelli');
         $modelProdotti = model('Prodotti');
-        if (session()->get('id_utente') != NULL) {
-            $carrello = $modelCarrelli->getCarrello(session()->get('id_utente'));
-            $totale = 0;
-            foreach ($carrello as $item) {
-                $prodotto = $modelProdotti->getProdotto($item->id_prodotto);
-                $item->titolo = $prodotto->titolo;
-                $item->prezzo = $prodotto->prezzo;
-                $totale += $prodotto->prezzo * $item->quantitativo;
-            }
-            return view(
-                'Carrello',
-                ['prodotti' => $carrello, 'totale' => $totale]
-            );
-        } else {
-            return redirect()->to('login');
+        if (session()->get('id_utente') == NULL) return redirect()->to('login');
+        $carrello = $modelCarrelli->getCarrello(session()->get('id_utente'));
+        $totale = 0;
+        foreach ($carrello as $item) {
+            $prodotto = $modelProdotti->getProdotto($item->id_prodotto);
+            $item->titolo = $prodotto->titolo;
+            $item->prezzo = $prodotto->prezzo;
+            $totale += $prodotto->prezzo * $item->quantitativo;
         }
+        return view(
+            'Carrello',
+            ['prodotti' => $carrello, 'totale' => $totale]
+        );
     }
 
     public function add()
@@ -36,7 +33,7 @@ class Carrello extends BaseController
         } else {
             return redirect()->to('login');
         }
-        return redirect()->to('carrello');
+        return redirect()->to('/');
     }
 
     public function remove()
@@ -58,13 +55,17 @@ class Carrello extends BaseController
         $modelDettagli = model('Dettagli_ordini');
 
         $carrello = $modelCarrelli->getCarrello(session()->get('id_utente'));
-        $modelCarrelli->removeCarrello(session()->get('id_utente'));
-        $modelOrdini->createOrdine(session()->get('id_utente'), $this->getTotale());
-        $id_ordine = $modelOrdini->getLastOrdine(session()->get('id_utente'));
-        
-        foreach ($carrello as $item) {
-            $modelDettagli->addDettaglio($id_ordine, $modelProdotti->getProdotto($item->id_prodotto)->prezzo, $item->quantitativo);
+        if (sizeof($carrello) == 0) {
+            return redirect()->to('ordini');
         }
+        $modelOrdini->createOrdine(session()->get('id_utente'), $this->getTotale());
+        $modelCarrelli->removeCarrello(session()->get('id_utente'));
+        $id_ordine = $modelOrdini->getLastOrdine(session()->get('id_utente'))->id;
+        foreach ($carrello as $item) {
+            $modelDettagli->addDettaglio($id_ordine, $modelProdotti->getProdotto($item->id_prodotto)->id, $modelProdotti->getProdotto($item->id_prodotto)->prezzo, $item->quantitativo);
+        }
+
+        return redirect()->to('ordini');
     }
 
     public function getTotale()

@@ -14,7 +14,7 @@ class Dettagli_ordini extends Model
     protected $returnType = 'object';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['id', 'id_ordine', 'prezzo', 'quantitativo'];
+    protected $allowedFields = ['id', 'id_ordine', 'id_prodotto', 'prezzo', 'quantitativo'];
 
     protected bool $allowEmptyInserts = false;
 
@@ -47,10 +47,11 @@ class Dettagli_ordini extends Model
         return $this->where('id_ordine', $id_ordine)->findAll();
     }
 
-    public function addDettaglio($id_ordine, $prezzo, $quantitativo)
+    public function addDettaglio($id_ordine, $id_prodotto, $prezzo, $quantitativo)
     {
         $dati = [
             'id_ordine' => $id_ordine,
+            'id_prodotto' => $id_prodotto,
             'prezzo' => $prezzo,
             'quantitativo' => $quantitativo
         ];
