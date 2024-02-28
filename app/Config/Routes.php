@@ -7,6 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Homepage::page');
 $routes->get('prodotto/(:any)', 'Prodotto::page/$1');
+$routes->get('cover/(:any)', 'Immagini::cover/$1');
 $routes->get('carrello', 'Carrello::page');
 $routes->get('login', 'Auth::login');
 $routes->get('logout', 'Auth::logout');

@@ -14,7 +14,7 @@ class Prodotti extends Model
     protected $returnType = 'object';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['id', 'titolo', 'descrizione', 'tipologia', 'prezzo', 'data_aggiunta', 'id_creatore', 'id_prodotto'];
+    protected $allowedFields = ['id', 'titolo', 'descrizione', 'prezzo', 'data_aggiunta', 'id_creatore', 'id_prodotto'];
 
     protected bool $allowEmptyInserts = false;
 
@@ -47,12 +47,11 @@ class Prodotti extends Model
         return $this->find($id);
     }
 
-    public function addProdotto($titolo, $descrizione, $tipologia, $prezzo, $data_aggiunta, $id_creatore, $id_prodotto)
+    public function addProdotto($titolo, $descrizione, $prezzo, $data_aggiunta, $id_creatore, $id_prodotto)
     {
         $dati = [
             'titolo' => $titolo,
             'descrizione' => $descrizione,
-            'tipologia' => $tipologia,
             'prezzo' => $prezzo,
             'data_aggiunta' => $data_aggiunta,
             'id_creatore' => $id_creatore,
@@ -63,7 +62,7 @@ class Prodotti extends Model
 
     public function getProdottiRecenti($limite)
     {
-        //return $this->orderBy('data_aggiunta', 'desc')->where('tipologia', 'prodotto')->findAll($limite);
+
         return $this->orderBy('data_aggiunta', 'desc')->findAll($limite);
     }
 

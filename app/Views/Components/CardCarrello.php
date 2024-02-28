@@ -19,6 +19,6 @@
         </div>
     </label>
     <div class="align-self-center ms-auto">
-        <img src="https://via.placeholder.com/100" alt="">
+        <img src="/cover/<?= $prodotto->id_prodotto ?>" alt="fiorellino" style="width:100px">
     </div>
 </div>

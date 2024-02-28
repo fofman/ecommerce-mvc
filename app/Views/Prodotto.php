@@ -16,7 +16,7 @@
     <main class="container">
         <form class="row" method="post" action="/aggiungiAlCarrello">
             <div class="col-md text-center mb-4">
-                <img src="https://via.placeholder.com/400" alt="Product Image" class="card-img-top">
+                <img src="/cover/<?= $prodotto->id ?>" alt="Product Image" class="card-img-top" style="width:400px">
             </div>
             <div class="col-lg">
                 <h2><?= $prodotto->titolo ?></h2>
@@ -37,7 +37,7 @@
                     <input type="number" min="0" value="1" name="quantitativo" class="form-control">
                 </div>
                 <br>
-                <button type="submit" class="btn btn-primary" name="prodotto" value="<?=$prodotto->id?>">Aggiungi al carrello</button>
+                <button type="submit" class="btn btn-primary" name="prodotto" value="<?= $prodotto->id ?>">Aggiungi al carrello</button>
             </div>
         </form>
         <br>

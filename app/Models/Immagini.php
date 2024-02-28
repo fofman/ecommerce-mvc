@@ -14,7 +14,7 @@ class Immagini extends Model
     protected $returnType = 'object';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['id', 'id_prodotto', 'percorso'];
+    protected $allowedFields = ['id', 'id_prodotto', 'nome_risorsa'];
 
     protected bool $allowEmptyInserts = false;
 
@@ -49,12 +49,17 @@ class Immagini extends Model
 
     public function getImmagineOf($id_prodotto)
     {
-        return $this->where('id_prodotto', $id_prodotto)->findAll();
+        try {
+            return $this->where('id_prodotto', $id_prodotto)->find()[0];
+        } catch (\Throwable $th) {
+            return "https://via.placeholder.com/300";
+        }
+        
     }
 
-    public function addImmagine($id_prodotto, $percorso)
+    public function addImmagine($id_prodotto, $nome_risorsa)
     {
-        $dati = ['id_prodotto' => $id_prodotto, 'percorso' => $percorso];
+        $dati = ['id_prodotto' => $id_prodotto, 'nome_risorsa' => $nome_risorsa];
         return $this->insert($dati);
     }
 }
