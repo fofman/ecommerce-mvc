@@ -20,7 +20,10 @@
             </div>
             <div class="col-lg">
                 <h2><?= $prodotto->titolo ?></h2>
-                <p><?= $prodotto->descrizione ?></p>
+                <div>
+                    <div><?= $prodotto->descrizione ?></div>
+                    <div><b>Costo unitario:</b> <?= $prodotto->prezzo ?> €</div>
+                </div>
                 <?php if (sizeof($accessori) != 0) { ?>
                     <h5>Accessori:</h5>
                     <ul class="list-group col-lg-8 col-md-8">
