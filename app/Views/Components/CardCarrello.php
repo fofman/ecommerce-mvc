@@ -4,7 +4,7 @@
             <i class="bi bi-trash-fill"></i>
         </button>
     </form>
-    <label class="form-check-label align-self-center mx-3" for="<?= $prodotto->id ?>" onclick="location.href='/prodotto/<?= $prodotto->id ?>'" style="cursor: pointer;">
+    <label class="form-check-label align-self-center mx-3" for="<?= $prodotto->id ?>" onclick="location.href='/prodotto/<?= $prodotto->id_prodotto ?>'" style="cursor: pointer;">
         <div>
             <span class="fw-bolder">
                 <?= $prodotto->titolo ?>
