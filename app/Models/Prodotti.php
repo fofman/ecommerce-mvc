@@ -60,10 +60,10 @@ class Prodotti extends Model
         $this->insert($dati);
     }
 
-    public function getProdottiRecenti($limite)
+    public function getProdottiRecenti($nome)
     {
 
-        return $this->orderBy('data_aggiunta', 'desc')->findAll($limite);
+        return $this->orderBy('data_aggiunta', 'desc')->like('titolo', $nome, 'both')->findAll();
     }
 
     public function getAccessori($id)
